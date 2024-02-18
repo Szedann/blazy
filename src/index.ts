@@ -8,6 +8,9 @@ import { cyan } from "colorette";
 import { modules } from "./modules/_modules";
 import commandHandler, { Command } from "./handlers/command.handler";
 
+/**
+ * an interface for creating modules
+ */
 export interface Module {
   name: string;
   run: (client: Client) => unknown;

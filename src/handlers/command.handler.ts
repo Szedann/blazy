@@ -16,10 +16,19 @@ const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN!);
 
 // LOAD COMMANDS AND UPLOAD TO DISCORD //
 
+/**
+ * an interface for creating commands
+ */
 export interface Command {
-  // create an interface accessible from another files used to create commands
+  /**
+   * SlashCommandBuilder for setting command data
+   */
   data: SlashCommandBuilder;
-  execute: (interaction: CommandInteraction) => unknown;
+  /**
+   * callback that will be ran, after the command is executed.
+   * make sure to await every message send otherwise you'll encounter issues
+   */
+  execute: (interaction: CommandInteraction) => Promise<unknown>;
 }
 
 const commands =
