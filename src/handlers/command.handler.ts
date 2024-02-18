@@ -2,15 +2,15 @@ import { Handler } from "..";
 import {
   REST,
   Routes,
-  SlashCommandBuilder,
   CommandInteraction,
   Collection,
   EmbedBuilder,
   RESTGetAPIOAuth2CurrentApplicationResult,
   Events,
+  SlashCommandBuilder,
 } from "discord.js";
 import * as color from "colorette";
-import { modules } from "../modules/_modules";
+import { configCommand, moduleCommands } from "./module.handler";
 
 const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN!);
 
@@ -23,7 +23,7 @@ export interface Command {
   /**
    * SlashCommandBuilder for setting command data
    */
-  data: SlashCommandBuilder;
+  data: Pick<SlashCommandBuilder, "toJSON" | "name" | "description">;
   /**
    * callback that will be ran, after the command is executed.
    * make sure to await every message send otherwise you'll encounter issues
@@ -31,13 +31,7 @@ export interface Command {
   execute: (interaction: CommandInteraction) => Promise<unknown>;
 }
 
-const commands =
-  modules
-    .map((module) => module.commands)
-    .reduce((commands1, commands2) => [
-      ...(commands1 ?? []),
-      ...(commands2 ?? []),
-    ]) ?? [];
+export const commands = [...moduleCommands, configCommand];
 
 const commandCollection = new Collection<string, Command>(
   commands.map((command) => [command.data.name, command]),
@@ -84,6 +78,40 @@ export async function reloadGlobalSlashCommands() {
 
     console.log(`Successfully reloaded global application (/) commands.`);
     console.timeEnd(color.yellowBright("Reloading global commands"));
+  } catch (error) {
+    // And of course, make sure you catch and log any errors!
+    console.error(error);
+  }
+}
+
+export async function reloadGuildSlashCommands(
+  guildId: string,
+  commands: Command[],
+) {
+  try {
+    console.log(
+      color.bgYellowBright(
+        `Started refreshing ${commands.length} application (/) commands for guild ${guildId}.`,
+      ),
+    );
+    console.time(color.yellowBright(`Reloading commands for guild ${guildId}`));
+
+    // The put method is used to fully refresh all commands with the current set
+
+    const { id: appId } = (await rest.get(
+      Routes.oauth2CurrentApplication(),
+    )) as RESTGetAPIOAuth2CurrentApplicationResult;
+
+    await rest.put(Routes.applicationGuildCommands(appId, guildId), {
+      body: commands.map((commandList) => commandList.data.toJSON()),
+    });
+
+    console.log(
+      `Successfully reloaded application (/) commands for guild ${guildId}.`,
+    );
+    console.timeEnd(
+      color.yellowBright(`Reloading commands for guild ${guildId}`),
+    );
   } catch (error) {
     // And of course, make sure you catch and log any errors!
     console.error(error);

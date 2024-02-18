@@ -1,34 +1,16 @@
-import {
-  BitFieldResolvable,
-  Client,
-  Events,
-  GatewayIntentsString,
-} from "discord.js";
+import { Client, Events } from "discord.js";
 import { cyan } from "colorette";
 import { modules } from "./modules/_modules";
-import commandHandler, { Command } from "./handlers/command.handler";
+import commandHandler from "./handlers/command.handler";
 import { buttonHandler } from "./handlers/button.handler";
-
-/**
- * an interface for creating modules
- */
-export interface Module {
-  name: string;
-  run: (client: Client) => unknown;
-  commands?: Command[];
-  enabledByDefault?: boolean;
-  intents?: BitFieldResolvable<GatewayIntentsString, number>[];
-}
+import { moduleHandler, moduleIntents } from "./handlers/module.handler";
 
 export type Handler = (client: Client) => unknown;
 
-const handlers = [commandHandler, buttonHandler];
+const handlers = [commandHandler, buttonHandler, moduleHandler];
 
 const client = new Client({
-  intents:
-    modules
-      .map((module) => module.intents)
-      .reduce((i1, i2) => [...(i1 ?? []), ...(i2 ?? [])]) || [],
+  intents: moduleIntents,
 });
 
 modules.forEach((module) => module.run(client));
