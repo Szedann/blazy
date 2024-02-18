@@ -1,0 +1,21 @@
+{
+  "name": "blazy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "dotenvx run -- ts-node-dev ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^0.16.0",
+    "colorette": "^2.0.20",
+    "discord.js": "^14.14.1"
+  }
+}
