@@ -7,6 +7,7 @@ import {
 import { cyan } from "colorette";
 import { modules } from "./modules/_modules";
 import commandHandler, { Command } from "./handlers/command.handler";
+import { buttonHandler } from "./handlers/button.handler";
 
 /**
  * an interface for creating modules
@@ -15,12 +16,13 @@ export interface Module {
   name: string;
   run: (client: Client) => unknown;
   commands?: Command[];
+  enabledByDefault?: boolean;
   intents?: BitFieldResolvable<GatewayIntentsString, number>[];
 }
 
 export type Handler = (client: Client) => unknown;
 
-const handlers = [commandHandler];
+const handlers = [commandHandler, buttonHandler];
 
 const client = new Client({
   intents:
