@@ -4,10 +4,13 @@ import { modules } from "./modules/_modules";
 import commandHandler from "./handlers/command.handler";
 import { buttonHandler } from "./handlers/button.handler";
 import { moduleHandler, moduleIntents } from "./handlers/module.handler";
+import { PrismaClient } from "@prisma/client";
 
 export type Handler = (client: Client) => unknown;
 
 const handlers = [commandHandler, buttonHandler, moduleHandler];
+
+export const prisma = new PrismaClient({});
 
 const client = new Client({
   intents: moduleIntents,

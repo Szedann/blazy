@@ -14,3 +14,5 @@ eslint_report.json
 .DS_Store
 
 .idea
+
+dev.db
