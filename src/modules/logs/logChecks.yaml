@@ -1,0 +1,9 @@
+optifine:
+  mods:
+    optifine: "*"
+  message: you're using optifine, it's stinky
+snr 1.4.3 create:
+  mods: 
+    create: "<0.5.1.c"
+    railways: ">=1.4.3"
+  message: "Create: Steam 'n' Rails `{mods.railways}` is incompatible with create `{mods.create}`. "
