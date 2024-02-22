@@ -3,7 +3,7 @@ OptiFine:
     optifine: "*"
   message: you're using optifine, it's stinky
 Steam n rails 1.4.3 version mismatch:
-  mods: 
+  mods:
     create: "<0.5.1.c"
     railways: ">=1.4.3"
   message: "Create: Steam 'n' Rails `{mods.railways}` is incompatible with create `{mods.create}`."
