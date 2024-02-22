@@ -5,9 +5,7 @@ export const testModule: Module = {
   name: "Test module",
   id: "test",
   intents: [GatewayIntentBits.GuildMessages],
-  async run(client) {
-    console.log(client.emojis.cache);
-  },
+  async load() {},
   commands: [
     {
       data: new SlashCommandBuilder()
