@@ -36,7 +36,7 @@ export const checkLogForIssues = (log: Log) => {
 
   const foundIssues: {
     name: string;
-    message: string;
+    value: string;
   }[] = [];
   for (const issueName in issues) {
     const issue = issues[issueName];
@@ -48,7 +48,7 @@ export const checkLogForIssues = (log: Log) => {
         if (semver.satisfies(parsedVersion, issue.mods[mod]))
           foundIssues.push({
             name: issueName,
-            message: issue.message.replace(/{[^}]+\}/g, (match) => {
+            value: issue.message.replace(/{[^}]+\}/g, (match) => {
               let ret: recordOrValue = logData;
               for (const key of match.slice(1, -1).split(".")) {
                 if (ret && typeof ret == "object" && key in ret) ret = ret[key];

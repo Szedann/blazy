@@ -1,9 +1,14 @@
-optifine:
+OptiFine:
   mods:
     optifine: "*"
   message: you're using optifine, it's stinky
-snr 1.4.3 create:
+Steam n rails 1.4.3 version mismatch:
   mods: 
     create: "<0.5.1.c"
     railways: ">=1.4.3"
-  message: "Create: Steam 'n' Rails `{mods.railways}` is incompatible with create `{mods.create}`. "
+  message: "Create: Steam 'n' Rails `{mods.railways}` is incompatible with create `{mods.create}`."
+Extended Bogeys version mismatch:
+  mods:
+    extended-bogeys: "<=0.4.3"
+    create: ">0.5.1.b"
+  message: "Create: Extended bogeys doesn't work with `create {mods.create}``. downgrade to `create 0.5.1.b` for it to work"
