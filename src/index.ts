@@ -16,7 +16,7 @@ const client = new Client({
   intents: moduleIntents,
 });
 
-modules.forEach((module) => module.run(client));
+modules.forEach((module) => module.load(client));
 
 handlers.forEach((handler) => handler(client));
 

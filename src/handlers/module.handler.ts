@@ -18,7 +18,7 @@ import { Handler, prisma } from "..";
 export interface Module {
   name: string;
   id: string;
-  run: (client: Client) => Awaitable<void>;
+  load: (client: Client) => Awaitable<void>;
   commands?: Command[];
   enabledByDefault?: boolean;
   intents?: BitFieldResolvable<GatewayIntentsString, number>[];
@@ -123,12 +123,6 @@ const reloadGuildCommands = async (guildId: string) => {
     !Array.isArray(configRes.config)
       ? configRes.config
       : {};
-  console.log(
-    config,
-    modules.filter(
-      (module) => config[module.id] ?? module.enabledByDefault ?? false,
-    ),
-  );
 
   const enabledModules = modules.filter(
     (module) => config[module.id] ?? module.enabledByDefault ?? false,
