@@ -34,7 +34,7 @@ export interface Command {
 export const commands = [...moduleCommands, configCommand];
 
 const commandCollection = new Collection<string, Command>(
-  commands.map((command) => [command.data.name, command]),
+  commands.map(command => [command.data.name, command]),
 );
 
 console.log(); // prints an empty line
@@ -73,7 +73,7 @@ export async function reloadGlobalSlashCommands() {
     )) as RESTGetAPIOAuth2CurrentApplicationResult;
 
     await rest.put(Routes.applicationCommands(appId), {
-      body: commands.map((commandList) => commandList.data.toJSON()),
+      body: commands.map(commandList => commandList.data.toJSON()),
     });
 
     console.log(`Successfully reloaded global application (/) commands.`);
@@ -103,7 +103,7 @@ export async function reloadGuildSlashCommands(
     )) as RESTGetAPIOAuth2CurrentApplicationResult;
 
     await rest.put(Routes.applicationGuildCommands(appId, guildId), {
-      body: commands.map((commandList) => commandList.data.toJSON()),
+      body: commands.map(commandList => commandList.data.toJSON()),
     });
 
     console.log(
@@ -118,8 +118,8 @@ export async function reloadGuildSlashCommands(
   }
 }
 
-const commandHandler: Handler = (client) => {
-  client.on(Events.InteractionCreate, async (interaction) => {
+const commandHandler: Handler = client => {
+  client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isCommand()) return; // make sure that the interaction came from a command
     if (!commandCollection.has(interaction.commandName)) return; // and that the command exist on this app
 

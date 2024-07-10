@@ -41,7 +41,7 @@ export class Button<ArgsType> {
   }
 }
 
-export const buttonHandler: Handler = (client) => {
+export const buttonHandler: Handler = client => {
   client.on(Events.InteractionCreate, async (interaction: Interaction) => {
     if (!interaction.isButton()) return;
     const data = JSON.parse(interaction.customId);

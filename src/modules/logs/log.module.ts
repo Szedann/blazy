@@ -19,7 +19,7 @@ export interface LogProvider {
 const hostnameMap = new Map<string, (text: string) => Promise<void | string>>();
 
 for (const provider of logProviders) {
-  provider.hostnames.forEach((hostname) =>
+  provider.hostnames.forEach(hostname =>
     hostnameMap.set(hostname, provider.parse),
   );
 }
@@ -45,13 +45,13 @@ export const logModule: Module = {
   ],
   async load(client) {
     console.log("log module");
-    client.on(Events.MessageCreate, async (message) => {
+    client.on(Events.MessageCreate, async message => {
       try {
         if (message.channel.partial) await message.channel.fetch();
         if (message.author.partial) await message.author.fetch();
 
         const attachment = message.attachments.find(
-          (attachment) => attachment.contentType == "text/plain; charset=utf-8",
+          attachment => attachment.contentType == "text/plain; charset=utf-8",
         );
 
         if (!message.content && !attachment) return;
@@ -74,7 +74,7 @@ export const logModule: Module = {
           / --version (\\S+) /, // MMC, Prism, PolyMC
         ];
 
-        if (!regexPasses.find((reg) => logText.match(reg))) return;
+        if (!regexPasses.find(reg => logText.match(reg))) return;
 
         const log = new Log(logText);
         const issues = checkLogForIssues(log);

@@ -26,7 +26,7 @@ export interface Module {
 
 export const moduleIntents =
   modules
-    .map((module) => module.intents)
+    .map(module => module.intents)
     .reduce((i1, i2) => [...(i1 ?? []), ...(i2 ?? [])]) || [];
 
 export const configCommand: Command = {
@@ -35,18 +35,18 @@ export const configCommand: Command = {
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
     .setDescription("Configure the bot")
     .addStringOption(
-      (option) =>
+      option =>
         option
           .setName("module")
           .setDescription("select the module")
           .setChoices(
             ...modules
-              .filter((module) => module.id != "base")
-              .map((module) => ({ name: module.name, value: module.id })),
+              .filter(module => module.id != "base")
+              .map(module => ({ name: module.name, value: module.id })),
           ),
       // .setRequired(true),
     )
-    .addBooleanOption((config) =>
+    .addBooleanOption(config =>
       config
         .setName("enabled")
         .setDescription(
@@ -63,7 +63,7 @@ export const configCommand: Command = {
       | undefined;
 
     const selectedModules = module
-      ? [modules.find((mdl) => mdl.id == module)!]
+      ? [modules.find(mdl => mdl.id == module)!]
       : modules;
 
     if (enabled != undefined && module != undefined) {
@@ -104,7 +104,7 @@ export const configCommand: Command = {
 
 export const moduleCommands =
   modules
-    .map((module) => module.commands)
+    .map(module => module.commands)
     .reduce((commands1, commands2) => [
       ...(commands1 ?? []),
       ...(commands2 ?? []),
@@ -125,14 +125,14 @@ const reloadGuildCommands = async (guildId: string) => {
       : {};
 
   const enabledModules = modules.filter(
-    (module) => config[module.id] ?? module.enabledByDefault ?? false,
+    module => config[module.id] ?? module.enabledByDefault ?? false,
   );
 
   reloadGuildSlashCommands(guildId, [
-    ...(enabledModules.filter((module) => module.commands).length > 0
+    ...(enabledModules.filter(module => module.commands).length > 0
       ? enabledModules
-          .map((module) => module.commands)
-          .filter((commands) => commands)
+          .map(module => module.commands)
+          .filter(commands => commands)
           .reduce((commands1, commands2) => [...commands1!, ...commands2!]) ??
         []
       : []),
@@ -158,7 +158,7 @@ export const isModuleEnabledForGuild = async (
       : {};
   return !!(
     config[moduleId] ??
-    modules.find((module) => module.id == moduleId)?.enabledByDefault ??
+    modules.find(module => module.id == moduleId)?.enabledByDefault ??
     false
   );
 };
@@ -191,8 +191,8 @@ export const setModuleEnabledForGuild = async (
   }
 };
 
-export const moduleHandler: Handler = (client) => {
-  client.once(Events.ClientReady, async (client) => {
+export const moduleHandler: Handler = client => {
+  client.once(Events.ClientReady, async client => {
     for (const guild of await client.guilds.fetch()) {
       reloadGuildCommands(guild[1].id);
     }

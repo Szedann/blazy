@@ -10,7 +10,7 @@ export const parseLogCommand: Command = {
     .setDescription(
       "parse minecraft logs and detect issues, also uploads to mclo.gs",
     )
-    .addAttachmentOption((option) =>
+    .addAttachmentOption(option =>
       option.setName("log").setDescription("log file").setRequired(true),
     ),
   async execute(interaction) {

@@ -79,7 +79,7 @@ export class Log {
       const modMatch = log.match(/- (\w|-)+ (\w+.|\w+)+/g);
       if (modMatch) {
         this.mods = new Map<string, string>(
-          modMatch.map((modText) => {
+          modMatch.map(modText => {
             const modInfo = modText.split(" ");
             return [modInfo[1], modInfo[2]];
           }),
@@ -89,8 +89,8 @@ export class Log {
       const modMatch = log.match(/ ([a-z]|-|_)+ *\| (\w+.|\w+)+/g);
       if (modMatch) {
         this.mods = new Map<string, string>(
-          modMatch.map((modText) => {
-            const modInfo = modText.split(" ").filter((a) => a && a != "|");
+          modMatch.map(modText => {
+            const modInfo = modText.split(" ").filter(a => a && a != "|");
             return [modInfo[0], modInfo[1]];
           }),
         );
@@ -99,11 +99,11 @@ export class Log {
       const modMatch = log.match(/\|([^ A-Z])+ *\|\d[^ |]+/g);
       if (modMatch) {
         this.mods = new Map<string, string>(
-          modMatch.map((modText) => {
+          modMatch.map(modText => {
             const modInfo = modText
               .split(" ")
-              .map((text) => text.slice(1))
-              .filter((text) => text);
+              .map(text => text.slice(1))
+              .filter(text => text);
             return [modInfo[0], modInfo[1]];
           }),
         );

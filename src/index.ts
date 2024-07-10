@@ -16,11 +16,11 @@ const client = new Client({
   intents: moduleIntents,
 });
 
-modules.forEach((module) => module.load(client));
+modules.forEach(module => module.load(client));
 
-handlers.forEach((handler) => handler(client));
+handlers.forEach(handler => handler(client));
 
-client.once(Events.ClientReady, async (client) => {
+client.once(Events.ClientReady, async client => {
   console.info(
     cyan(
       `Logged in as ${
