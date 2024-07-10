@@ -27,8 +27,7 @@ const getJavaVersion = (log: string) => {
   for (const regex of javaVersionRegexes) {
     const regRes = log.match(regex);
     if (!regRes) continue;
-    const version = regRes[1].toString();
-    return version;
+    return regRes[1].toString();
   }
 };
 
@@ -73,8 +72,8 @@ export class Log {
     this.loader = getLoader(log);
     this.gameVersion = getMinecraftVersion(log);
     this.javaVersion = getJavaVersion(log);
-    this.warnCount = log.match(/\[*\/WARN\]/g)?.length ?? 0;
-    this.errorCount = log.match(/\[*\/ERROR\]/g)?.length ?? 0;
+    this.warnCount = log.match(/\[*\/WARN]/g)?.length ?? 0;
+    this.errorCount = log.match(/\[*\/ERROR]/g)?.length ?? 0;
     if (this.loader?.name == "Fabric") {
       const modMatch = log.match(/- (\w|-)+ (\w+.|\w+)+/g);
       if (modMatch) {

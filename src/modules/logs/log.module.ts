@@ -26,7 +26,7 @@ for (const provider of logProviders) {
 
 async function readWebLog(text: string): Promise<string | void> {
   const reg = text.match(
-    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/,
+    /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/,
   );
   if (!reg) return;
   const url = reg[0];
@@ -67,7 +67,7 @@ export const logModule: Module = {
 
         const regexPasses = [
           /---- Minecraft Crash Report ----/, // Forge Crash report
-          /\n\\|[\\s\\d]+\\| Minecraft\\s+\\| minecraft\\s+\\| (\\S+).+\n/, // Quilt mod table
+          /\n\\|[\\s d]+\\| Minecraft\\s+\\| minecraft\\s+\\| (\\S+).+\n/, // Quilt mod table
           /: Loading Minecraft (\\S+)/, // Fabric, Quilt
           /--fml.mcVersion, ([^\\s,]+)/, // Forge
           /--version, ([^,]+),/, // ATLauncher

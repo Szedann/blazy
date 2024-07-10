@@ -33,11 +33,10 @@ export class Button<ArgsType> {
       console.error(red("customId over 100 characters long."), customId);
       throw Error("customId over 100 characters long.");
     }
-    const button = new ButtonBuilder({
+    return new ButtonBuilder({
       ...data,
       customId,
     });
-    return button;
   }
 }
 
